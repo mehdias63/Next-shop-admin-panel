@@ -1,34 +1,34 @@
 {
-	"name": "next-shop-admin-panel",
-	"version": "0.1.0",
-	"private": true,
-	"type": "module",
-	"scripts": {
-		"dev": "next dev --turbopack",
-		"build": "next build",
-		"start": "next start",
-		"lint": "next lint"
-	},
-	"dependencies": {
-		"@pathofdev/react-tag-input": "^1.0.7",
-		"@tanstack/react-query": "^5.81.2",
-		"axios": "^1.10.0",
-		"framer-motion": "^12.23.6",
-		"next": "15.3.3",
-		"query-string": "^9.2.2",
-		"react": "^19.0.0",
-		"react-dom": "^19.0.0",
-		"react-hot-toast": "^2.5.2",
-		"react-icons": "^5.5.0",
-		"react-multi-date-picker": "^4.5.2",
-		"react-otp-input": "^3.1.1",
-		"react-select": "^5.10.2"
-	},
-	"devDependencies": {
-		"@eslint/eslintrc": "^3",
-		"@tailwindcss/postcss": "^4",
-		"eslint": "^9",
-		"eslint-config-next": "15.3.3",
-		"tailwindcss": "^4"
-	}
+  "name": "next-shop-admin-panel",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@pathofdev/react-tag-input": "^1.0.7",
+    "@tanstack/react-query": "^5.81.2",
+    "axios": "^1.10.0",
+    "framer-motion": "^12.23.6",
+    "next": "15.3.8",
+    "query-string": "^9.2.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hot-toast": "^2.5.2",
+    "react-icons": "^5.5.0",
+    "react-multi-date-picker": "^4.5.2",
+    "react-otp-input": "^3.1.1",
+    "react-select": "^5.10.2"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.3",
+    "tailwindcss": "^4"
+  }
 }
