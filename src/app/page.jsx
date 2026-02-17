@@ -14,7 +14,7 @@ export default function WelcomeSection() {
 					className="w-full"
 				>
 					<Image
-						src="/Capture11.PNG"
+						src="/Capture11.png"
 						width={600}
 						height={400}
 						alt="welcome"
