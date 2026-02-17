@@ -36,7 +36,7 @@ function MePage() {
 		}
 	}
 
-	if (isLoading) return <Loading />
+	if (isLoading) return <Loader />
 
 	return (
 		<div className="max-w-sm">
