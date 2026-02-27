@@ -1,3 +1,5 @@
+'use client'
+
 import RadioInput from '@/ui/RadioInput'
 import TextField from '@/ui/TextField'
 import Select from 'react-select'
@@ -5,6 +7,7 @@ import DatePicker from 'react-multi-date-picker'
 import persian from 'react-date-object/calendars/persian'
 import persian_fa from 'react-date-object/locales/persian_fa'
 import Loader from '@/ui/Loader'
+import { useLanguage } from '@/context/LanguageContext'
 
 function CouponForm({
 	formData,
@@ -19,35 +22,37 @@ function CouponForm({
 	isLoading,
 	defaultValue = '',
 }) {
+	const { t, lang } = useLanguage()
+
 	return (
 		<div className="max-w-sm">
 			<form className="space-y-4" onSubmit={onSubmit}>
 				<TextField
-					label="کد"
+					label={t('code')}
 					name="code"
 					value={formData.code || ''}
 					onChange={onFormChange}
 				/>
 				<TextField
-					label="مقدار"
+					label={t('amount')}
 					name="amount"
 					value={formData.amount || ''}
 					onChange={onFormChange}
 				/>
 				<TextField
-					label="ظرفیت"
+					label={t('capacity')}
 					name="usageLimit"
 					value={formData.usageLimit || ''}
 					onChange={onFormChange}
 				/>
 				<div>
-					<span className="mb-2 block">نوع کد تخفیف</span>
+					<span className="mb-2 block">{t('discountCodeType')}</span>
 					<div className="flex items-center justify-between">
 						<RadioInput
 							checked={type === 'percent'}
 							id="percent-type"
 							name="type"
-							label="درصد"
+							label={t('percent')}
 							value="percent"
 							onChange={e => setType(e.target.value)}
 						/>
@@ -55,7 +60,7 @@ function CouponForm({
 							checked={type === 'fixedProduct'}
 							id="fixedProduct-type"
 							name="type"
-							label="قیمت ثابت"
+							label={t('fixedPrice')}
 							value="fixedProduct"
 							onChange={e => setType(e.target.value)}
 						/>
@@ -63,7 +68,7 @@ function CouponForm({
 				</div>
 				<div>
 					<label htmlFor="products" className="mb-2 block">
-						شامل محصولات
+						{t('includesProducts')}
 					</label>
 					<Select
 						instanceId="products"
@@ -76,13 +81,13 @@ function CouponForm({
 					/>
 				</div>
 				<div>
-					<span className="mb-2 block">تاریخ انقضا</span>
+					<span className="mb-2 block">{t('expiryDate')}</span>
 					<DatePicker
 						inputClass="textField__input w-[330px]"
 						value={expireDate}
 						format="YYYY/MM/DD"
-						calendar={persian}
-						locale={persian_fa}
+						calendar={lang === 'fa' ? persian : undefined}
+						locale={lang === 'fa' ? persian_fa : undefined}
 						calendarPosition="bottom-left"
 						onChange={date => setExpireDate(date)}
 					/>
@@ -91,7 +96,7 @@ function CouponForm({
 					{isLoading ? (
 						<Loader />
 					) : (
-						<button className="btn-primary"> تایید</button>
+						<button className="btn-primary">{t('submit')}</button>
 					)}
 				</div>
 			</form>

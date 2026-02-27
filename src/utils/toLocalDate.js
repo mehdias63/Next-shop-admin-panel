@@ -1,14 +1,14 @@
-export function toLocalDateString(date) {
+export function toLocalDateString(date, lang = 'fa') {
+	const locale = lang === 'en' ? 'en-US' : 'fa-IR'
 	const options = {
-		// weekday: "long",
 		year: 'numeric',
 		month: 'long',
 		day: 'numeric',
 	}
-
-	return new Date(date).toLocaleDateString('fa-IR', options)
+	return new Date(date).toLocaleDateString(locale, options)
 }
 
-export function toLocalDateStringShort(date) {
-	return new Date(date).toLocaleDateString('fa-IR')
+export function toLocalDateStringShort(date, lang = 'fa') {
+	const locale = lang === 'en' ? 'en-US' : 'fa-IR'
+	return new Date(date).toLocaleDateString(locale)
 }

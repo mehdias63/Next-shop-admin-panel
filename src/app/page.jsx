@@ -2,8 +2,11 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { useLanguage } from '@/context/LanguageContext'
 
 export default function WelcomeSection() {
+	const { t } = useLanguage()
+
 	return (
 		<section className="relative overflow-hidden bg-white py-20 px-4 md:px-10 lg:px-20">
 			<div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-12">
@@ -28,25 +31,24 @@ export default function WelcomeSection() {
 					transition={{ duration: 0.8 }}
 					className="flex flex-col gap-y-12 items-center md:items-start"
 				>
-					<h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-red-500 leading-tight mb-6">
-						به فروشگاه ما خوش آمدید!
+					<h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#35aaa2] to-[#f97937] leading-tight mb-6">
+						{t('welcomeTitle')}
 					</h1>
 					<p className="text-lg text-gray-500 mb-8">
-						با ورود به حساب کاربری خود، به محصولات متنوع، تخفیف‌های
-						ویژه و تجربه‌ای بی‌نظیر در خرید آنلاین دسترسی پیدا کنید.
+						{t('welcomeSubtitle')}
 					</p>
 					<div className="flex gap-x-8">
 						<Link
 							href="/products"
 							className="bg-[#35aaa2] hover:bg-[#35aaa2]/60 text-white font-semibold px-6 py-3 rounded-xl shadow-md transition-all duration-200"
 						>
-							مشاهده محصولات
+							{t('viewProducts')}
 						</Link>
 						<Link
 							href="/auth"
 							className="bg-[#f97937] hover:bg-[#f97937]/60 text-white font-semibold px-6 py-3 rounded-xl shadow-md transition-all duration-200"
 						>
-							ورود به حساب کاربری
+							{t('loginToAccount')}
 						</Link>
 					</div>
 				</motion.div>

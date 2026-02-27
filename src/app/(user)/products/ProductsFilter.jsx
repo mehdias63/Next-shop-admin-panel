@@ -6,8 +6,10 @@ import {
 	useRouter,
 } from 'next/navigation'
 import { useCallback, useState } from 'react'
+import { useLanguage } from '@/context/LanguageContext'
 
 function ProductsFilter({ categories }) {
+	const { lang, t } = useLanguage()
 	const router = useRouter()
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
@@ -48,7 +50,7 @@ function ProductsFilter({ categories }) {
 	return (
 		<div className="mb-8 bg-white rounded-2xl shadow-md p-5 border border-gray-200">
 			<p className="font-bold text-lg text-gray-800 mb-4 border-b pb-2">
-				📂 دسته‌بندی‌ها
+				{t('categoriesTitle')}
 			</p>
 			<ul className="space-y-3">
 				{categories.map(category => (
@@ -57,7 +59,7 @@ function ProductsFilter({ categories }) {
 						id={category._id}
 						value={category.englishTitle}
 						name="product-type"
-						label={category.title}
+						label={lang === 'en' ? (category.englishTitle || category.title) : category.title}
 						onChange={categoryHandler}
 						checked={selectedCategories.includes(
 							category.englishTitle,

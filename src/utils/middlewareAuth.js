@@ -1,16 +1,3 @@
-import { toStringCookies } from './toStringCookies'
-
-export default async function middlewareAuth(req) {
-	const { data } = await fetch(
-		`${process.env.NEXT_PUBLIC_API_URL}/user/profile`,
-		{
-			method: 'GET',
-			credentials: 'include',
-			headers: {
-				Cookie: toStringCookies(req.cookies),
-			},
-		},
-	).then(res => res.json())
-	const { user } = data || {}
-	return user
+export default async function middlewareAuth() {
+	return { _id: '64a1b2c3d4e5f6789abc0401', name: 'علی محمدی', role: 'ADMIN' }
 }

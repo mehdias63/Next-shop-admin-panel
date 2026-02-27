@@ -1,11 +1,13 @@
 'use client'
 
 import { useGetUser } from '@/hooks/useAuth'
+import { useLanguage } from '@/context/LanguageContext'
 import Link from 'next/link'
 
 function Header() {
 	const { data, error, isLoading } = useGetUser()
 	const { user, cart } = data || {}
+	const { lang, setLang, t } = useLanguage()
 
 	return (
 		<header
@@ -17,27 +19,27 @@ function Header() {
 				<ul className="flex items-center justify-between py-4 px-4 md:px-6 text-sm md:text-base font-medium text-gray-700">
 					<li>
 						<Link href="/" className="link-li">
-							خانه
+							{t('home')}
 						</Link>
 					</li>
 					<li>
 						<Link href="/products" className="link-li">
-							محصولات
+							{t('products')}
 						</Link>
 					</li>
 					<li>
 						<Link href="/profile" className="link-li">
-							پنل کاربر
+							{t('userPanel')}
 						</Link>
 					</li>
 					<li>
 						<Link href="/admin" className="link-li">
-							پنل ادمین
+							{t('adminPanel')}
 						</Link>
 					</li>
 					<li>
 						<Link href="/cart" className="link-li">
-							سبد خرید ({cart ? cart.payDetail.productIds.length : 0})
+							{t('cart')} ({cart ? cart.productDetail.length : 0})
 						</Link>
 					</li>
 
@@ -48,10 +50,19 @@ function Header() {
 					) : (
 						<li>
 							<Link href="/auth" className="link-li">
-								ورود
+								{t('login')}
 							</Link>
 						</li>
 					)}
+
+					<li>
+						<button
+							onClick={() => setLang(lang === 'fa' ? 'en' : 'fa')}
+							className="text-xs border border-gray-300 rounded px-2 py-1 hover:bg-gray-100 transition-colors font-mono"
+						>
+							{lang === 'fa' ? 'EN' : 'FA'}
+						</button>
+					</li>
 				</ul>
 			</nav>
 		</header>

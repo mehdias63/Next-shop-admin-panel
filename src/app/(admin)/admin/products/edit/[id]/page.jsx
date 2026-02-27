@@ -10,6 +10,7 @@ import { includeObj } from '@/utils/objectUtils'
 import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { useLanguage } from '@/context/LanguageContext'
 
 const includesProductKey = [
 	'title',
@@ -34,6 +35,7 @@ function page() {
 	const [tags, setTags] = useState(product?.tags || [])
 	const [selectedCategory, setSelectedCategory] = useState('')
 	const { isLoading, mutateAsync } = useUpdateProduct()
+	const { t } = useLanguage()
 
 	const handChange = e => {
 		setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -68,7 +70,7 @@ function page() {
 	if (isLoadingProduct) return <Loader />
 	return (
 		<div>
-			<h1 className="mb-6 font-bold text-xl">ویرایش اطلاعات محصول</h1>
+			<h1 className="mb-6 font-bold text-xl">{t('editProductInfo')}</h1>
 			<ProductForm
 				onSubmit={handleSubmit}
 				categories={categories}

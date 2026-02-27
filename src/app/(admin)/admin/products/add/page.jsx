@@ -6,9 +6,12 @@ import { useAddProduct } from '@/hooks/useProducts'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { useLanguage } from '@/context/LanguageContext'
+import { useQueryClient } from '@tanstack/react-query'
 
 function addProductPage() {
 	const { isLoading, mutateAsync } = useAddProduct()
+	const { t } = useLanguage()
 	const { data } = useGetCategories()
 	const { categories } = data || {}
 	const [formData, setFormData] = useState({
@@ -23,7 +26,7 @@ function addProductPage() {
 		imageLink: '',
 	})
 	const router = useRouter()
-	const [tags, setTags] = useState([])
+	const queryClient = useQueryClient()
 	const [selectedCategory, setSelectedCategory] = useState('')
 
 	const handChange = e => {
@@ -37,8 +40,9 @@ function addProductPage() {
 				...formData,
 				category: selectedCategory._id,
 			})
-			router.push('/admin/products')
+			queryClient.invalidateQueries({ queryKey: ['get-products'] })
 			toast.success(message)
+			router.push('/admin/products')
 		} catch (error) {
 			toast.error(error?.response?.data?.message)
 		}
@@ -47,7 +51,7 @@ function addProductPage() {
 	return (
 		<div className="mb-10">
 			<h1 className="mb-4 font-bold text-xl text-blue-500">
-				اضافه کردن محصول
+				{t('addProduct')}
 			</h1>
 			<ProductForm
 				onSubmit={handleSubmit}

@@ -5,10 +5,12 @@ import Link from 'next/link'
 import CartItem from './CartItem'
 import Loader from '@/ui/Loader'
 import CartSummary from './CartSummary'
+import { useLanguage } from '@/context/LanguageContext'
 
 function CartPage() {
 	const { data, isLoading } = useGetUser()
 	const { user, cart } = data || {}
+	const { t } = useLanguage()
 
 	if (isLoading) return <Loader />
 
@@ -16,13 +18,13 @@ function CartPage() {
 		return (
 			<div className="container lg:max-w-screen-lg">
 				<p className="font-bold mb-4">
-					برای مشاهده سبد خرید لطفا لاگین کنید
+					{t('cartLoginRequired')}
 				</p>
 				<Link
 					href="/auth"
 					className="text-lg font-bold text-primary-900"
 				>
-					رفتن به صفحه لاگین؟
+					{t('goToLogin')}
 				</Link>
 			</div>
 		)
@@ -30,12 +32,12 @@ function CartPage() {
 	if (!user.cart?.products || user.cart?.products.length === 0)
 		return (
 			<div>
-				<p className="mb-4">سبد خرید خالیه!</p>
+				<p className="mb-4">{t('cartEmpty')}</p>
 				<Link
 					href="/products"
 					className="text-lg font-bold text-blue-500"
 				>
-					رفتن به صفحه محصولات
+					{t('goToProducts')}
 				</Link>
 			</div>
 		)

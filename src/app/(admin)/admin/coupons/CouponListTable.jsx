@@ -1,3 +1,5 @@
+'use client'
+
 import { couponListTableTHeads } from '@/constants/tableHeads'
 import { useRemoveCoupon } from '@/hooks/useCoupons'
 import { toLocalDateStringShort } from '@/utils/toLocalDate'
@@ -6,10 +8,12 @@ import Link from 'next/link'
 import { toast } from 'react-hot-toast'
 import { HiEye, HiTrash } from 'react-icons/hi'
 import { RiEdit2Line } from 'react-icons/ri'
+import { useLanguage } from '@/context/LanguageContext'
 
 function CouponListTable({ coupons }) {
 	const { mutateAsync } = useRemoveCoupon()
 	const queryClient = useQueryClient()
+	const { lang, t } = useLanguage()
 
 	const removeCouponHandler = async id => {
 		try {
@@ -32,7 +36,7 @@ function CouponListTable({ coupons }) {
 									className="whitespace-nowrap table__th"
 									key={item.id}
 								>
-									{item.label}
+									{item.labelKey ? t(item.labelKey) : item.label}
 								</th>
 							)
 						})}
@@ -69,7 +73,7 @@ function CouponListTable({ coupons }) {
 								<td className="table__td">{coupon.usageCount}</td>
 								<td className="table__td">{coupon.usageLimit}</td>
 								<td className="table__td">
-									{toLocalDateStringShort(coupon.expireDate)}
+									{toLocalDateStringShort(coupon.expireDate, lang)}
 								</td>
 								<td className="table__td font-bold text-lg">
 									<div className="flex items-center gap-x-4">

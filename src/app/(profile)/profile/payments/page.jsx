@@ -1,23 +1,19 @@
 'use client'
 
-import { userPaymentTHeads } from '@/constants/tableHeads'
 import { useGetUser } from '@/hooks/useAuth'
-import {
-	toLocalDateString,
-	toLocalDateStringShort,
-} from '@/utils/toLocalDate'
-import { toPersianNumbersWithComma } from '@/utils/toPersianNumbers'
 import PaymentTable from './PaymentTable'
 import Loader from '@/ui/Loader'
+import { useLanguage } from '@/context/LanguageContext'
 
 function Payments() {
 	const { data, isLoading } = useGetUser()
 	const { user, payments } = data || {}
+	const { t } = useLanguage()
 
 	if (isLoading) return <Loader />
 	return (
 		<div>
-			<h1>سفارشات کاربر</h1>
+			<h1>{t('userOrders')}</h1>
 			<PaymentTable payments={payments} />
 		</div>
 	)

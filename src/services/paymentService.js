@@ -1,15 +1,14 @@
-import http from './httpService'
+import { payments, findPaymentById } from '@/data/payments'
 
 export function createPayment() {
-	return http.post('/payment/create').then(({ data }) => data.data)
+	return Promise.resolve({ message: 'سفارش با موفقیت ثبت شد' })
 }
 
 export function getAllPayments() {
-	return http.get('/admin/payment/list').then(({ data }) => data.data)
+	return Promise.resolve({ payments })
 }
 
 export function getPaymentById(id) {
-	return http
-		.get(`/admin/payment/${id}`)
-		.then(({ data }) => data.data)
+	const payment = findPaymentById(id) || payments[0]
+	return Promise.resolve({ payment })
 }

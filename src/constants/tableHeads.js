@@ -1,193 +1,61 @@
 export const userPaymentTHeads = [
-	{
-		id: 1,
-		label: '#',
-	},
-	{
-		id: 2,
-		label: 'شماره فاکتور',
-	},
-	{
-		id: 3,
-		label: 'توضیحات',
-	},
-	{
-		id: 4,
-		label: 'محصولات',
-	},
-	{
-		id: 5,
-		label: 'مبلغ',
-	},
-	{
-		id: 6,
-		label: 'تاریخ',
-	},
-	{
-		id: 7,
-		label: 'وضعیت',
-	},
+	{ id: 1, label: '#' },
+	{ id: 2, labelKey: 'invoiceNumber' },
+	{ id: 3, labelKey: 'description' },
+	{ id: 4, labelKey: 'products' },
+	{ id: 5, labelKey: 'amount' },
+	{ id: 6, labelKey: 'date' },
+	{ id: 7, labelKey: 'status' },
 ]
 
 export const userListTableHeads = [
-	{
-		id: 1,
-		label: '#',
-	},
-	{
-		id: 2,
-		label: 'نام',
-	},
-	{
-		id: 3,
-		label: 'ایمیل',
-	},
-	{
-		id: 4,
-		label: 'شماره موبایل',
-	},
-	{
-		id: 5,
-		label: 'محصولات',
-	},
-	{
-		id: 6,
-		label: 'تاریخ پیوستن',
-	},
+	{ id: 1, label: '#' },
+	{ id: 2, labelKey: 'name' },
+	{ id: 3, labelKey: 'email' },
+	{ id: 4, labelKey: 'phoneNumber' },
+	{ id: 5, labelKey: 'products' },
+	{ id: 6, labelKey: 'joinDate' },
 ]
 
 export const productListTableTHeads = [
-	{
-		id: 1,
-		label: '#',
-	},
-	{
-		id: 2,
-		label: 'عنوان',
-	},
-	{
-		id: 3,
-		label: 'دسته بندی',
-	},
-	{
-		id: 4,
-		label: 'قیمت',
-	},
-	{
-		id: 5,
-		label: 'تخفیف',
-	},
-	{
-		id: 6,
-		label: 'قیمت با تخفیف',
-	},
-	{
-		id: 7,
-		label: 'موجودی',
-	},
-	{
-		id: 8,
-		label: 'عملیات',
-	},
+	{ id: 1, label: '#' },
+	{ id: 2, labelKey: 'title' },
+	{ id: 3, labelKey: 'category' },
+	{ id: 4, labelKey: 'price' },
+	{ id: 5, labelKey: 'discount' },
+	{ id: 6, labelKey: 'priceWithDiscount' },
+	{ id: 7, labelKey: 'stock' },
+	{ id: 8, labelKey: 'actions' },
 ]
 
 export const categoryListTableTHeads = [
-	{
-		id: 1,
-		label: '#',
-	},
-	{
-		id: 2,
-		label: 'عنوان',
-	},
-	{
-		id: 3,
-		label: 'توضیحات',
-	},
-	{
-		id: 4,
-		label: 'عنوان انگلیسی',
-	},
-	{
-		id: 5,
-		label: 'نوع',
-	},
-	{
-		id: 6,
-		label: 'عملیات',
-	},
+	{ id: 1, label: '#' },
+	{ id: 2, labelKey: 'title' },
+	{ id: 3, labelKey: 'description' },
+	{ id: 4, labelKey: 'englishTitle' },
+	{ id: 5, labelKey: 'type' },
+	{ id: 6, labelKey: 'actions' },
 ]
 
 export const adminPaymentListTableTHeads = [
-	{
-		id: 1,
-		label: '#',
-	},
-	{
-		id: 2,
-		label: 'شماره فاکتور',
-	},
-	{
-		id: 3,
-		label: 'توضیحات',
-	},
-	{
-		id: 4,
-		label: 'کاربر',
-	},
-	{
-		id: 5,
-		label: 'محصولات',
-	},
-	{
-		id: 6,
-		label: 'مبلغ',
-	},
-	{
-		id: 7,
-		label: 'تاریخ',
-	},
-	{
-		id: 8,
-		label: 'وضعیت',
-	},
+	{ id: 1, label: '#' },
+	{ id: 2, labelKey: 'invoiceNumber' },
+	{ id: 3, labelKey: 'description' },
+	{ id: 4, labelKey: 'user' },
+	{ id: 5, labelKey: 'products' },
+	{ id: 6, labelKey: 'amount' },
+	{ id: 7, labelKey: 'date' },
+	{ id: 8, labelKey: 'status' },
 ]
 
 export const couponListTableTHeads = [
-	{
-		id: 1,
-		label: '#',
-	},
-	{
-		id: 2,
-		label: 'کد',
-	},
-	{
-		id: 3,
-		label: 'نوع',
-	},
-	{
-		id: 4,
-		label: 'مقدار',
-	},
-	{
-		id: 6,
-		label: 'شامل محصولات',
-	},
-	{
-		id: 7,
-		label: 'مقدار مصرفی',
-	},
-	{
-		id: 8,
-		label: 'ظرفیت',
-	},
-	{
-		id: 9,
-		label: 'تاریخ انقضا',
-	},
-	{
-		id: 10,
-		label: 'عملیات',
-	},
+	{ id: 1, label: '#' },
+	{ id: 2, labelKey: 'code' },
+	{ id: 3, labelKey: 'type' },
+	{ id: 4, labelKey: 'amount' },
+	{ id: 6, labelKey: 'includesProducts' },
+	{ id: 7, labelKey: 'usageCount' },
+	{ id: 8, labelKey: 'capacity' },
+	{ id: 9, labelKey: 'expiryDate' },
+	{ id: 10, labelKey: 'actions' },
 ]

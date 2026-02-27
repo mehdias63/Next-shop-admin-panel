@@ -2,8 +2,11 @@
 
 import { logout } from '@/services/authServices'
 import Link from 'next/link'
+import { useLanguage } from '@/context/LanguageContext'
 
 function SideBar() {
+	const { t } = useLanguage()
+
 	const logoutHandler = async () => {
 		await logout()
 		document.location.href = '/'
@@ -14,22 +17,22 @@ function SideBar() {
 			<ul className="flex flex-col space-y-8">
 				<li>
 					<Link href="/" className="link-li">
-						صفحه اصلی
+						{t('home')}
 					</Link>
 				</li>
 				<li>
 					<Link href="/profile" className="link-li">
-						داشبورد
+						{t('dashboard')}
 					</Link>
 				</li>
 				<li>
 					<Link href="/profile/me" className="link-li">
-						اطلاعات کاربری
+						{t('userInfoTitle')}
 					</Link>
 				</li>
 				<li>
 					<Link href="/profile/payments" className="link-li">
-						سفارشات{' '}
+						{t('userOrders')}
 					</Link>
 				</li>
 				<li>
@@ -37,7 +40,7 @@ function SideBar() {
 						onClick={logoutHandler}
 						className="link-li cursor-pointer"
 					>
-						خروج از حساب کاربری
+						{t('logout')}
 					</button>
 				</li>
 			</ul>

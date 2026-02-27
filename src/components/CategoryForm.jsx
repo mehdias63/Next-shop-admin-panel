@@ -1,28 +1,15 @@
+'use client'
+
 import Select from 'react-select'
 import TextField from '@/ui/TextField'
 import Loader from '@/ui/Loader'
+import { useLanguage } from '@/context/LanguageContext'
 
 export const categoryTypes = [
-	{
-		id: 1,
-		label: 'محصول',
-		value: 'product',
-	},
-	{
-		id: 2,
-		label: 'پست',
-		value: 'post',
-	},
-	{
-		id: 3,
-		label: 'تیکت',
-		value: 'ticket',
-	},
-	{
-		id: 4,
-		label: 'نظرات',
-		value: 'comment',
-	},
+	{ id: 1, labelKey: 'categoryTypeProduct', value: 'product' },
+	{ id: 2, labelKey: 'categoryTypePost', value: 'post' },
+	{ id: 3, labelKey: 'categoryTypeTicket', value: 'ticket' },
+	{ id: 4, labelKey: 'categoryTypeComments', value: 'comment' },
 ]
 
 function CategoryForm({
@@ -33,35 +20,38 @@ function CategoryForm({
 	setSelectedType,
 	isLoading,
 }) {
+	const { t } = useLanguage()
+
 	return (
 		<div className="max-w-sm mb-10">
 			<form className="space-y-4" onSubmit={onSubmit}>
 				<TextField
 					name="title"
-					label="عنوان"
+					label={t('title')}
 					value={category.title || ''}
 					onChange={handleChange}
 				/>
 				<TextField
 					name="englishTitle"
-					label="عنوان انگلیسی"
+					label={t('englishTitleLabel')}
 					value={category.englishTitle || ''}
 					onChange={handleChange}
 				/>
 				<TextField
 					name="description"
-					label="توضیحات"
+					label={t('description')}
 					value={category.description || ''}
 					onChange={handleChange}
 				/>
 				<div>
 					<label htmlFor="type" className="mb-2 block">
-						نوع
+						{t('type')}
 					</label>
 					<Select
 						instanceId="type"
 						onChange={setSelectedType}
 						options={categoryTypes}
+						getOptionLabel={option => t(option.labelKey)}
 						defaultValue={selectedType}
 					/>
 				</div>
@@ -69,7 +59,7 @@ function CategoryForm({
 					{isLoading ? (
 						<Loader />
 					) : (
-						<button className="btn-primary mt-6">تایید</button>
+						<button className="btn-primary mt-6">{t('submit')}</button>
 					)}
 				</div>
 			</form>

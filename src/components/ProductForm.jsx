@@ -3,54 +3,7 @@
 import Select from 'react-select'
 import TextField from '@/ui/TextField'
 import Loader from '@/ui/Loader'
-
-const productsFormData = [
-	{
-		id: 1,
-		label: 'عنوان',
-		name: 'title',
-	},
-	{
-		id: 2,
-		label: 'توضیحات',
-		name: 'description',
-	},
-	{
-		id: 3,
-		label: 'اسلاگ',
-		name: 'slug',
-	},
-	{
-		id: 4,
-		label: 'برند',
-		name: 'brand',
-	},
-	{
-		id: 5,
-		label: 'قیمت',
-		name: 'price',
-	},
-	{
-		id: 6,
-		label: 'تخفیف',
-		name: 'discount',
-	},
-	{
-		id: 7,
-		label: 'قیمت روی تخفیف',
-		name: 'offPrice',
-	},
-	{
-		id: 8,
-		label: 'موجودی',
-		name: 'countInStock',
-	},
-	{
-		id: 9,
-		label: 'لینک عکس محصول',
-		name: 'imageLink',
-	},
-]
+import { useLanguage } from '@/context/LanguageContext'
 
 function ProductForm({
 	onSubmit,
@@ -61,6 +14,20 @@ function ProductForm({
 	isLoading,
 	selectedCategory = '',
 }) {
+	const { t } = useLanguage()
+
+	const productsFormData = [
+		{ id: 1, label: t('title'), name: 'title' },
+		{ id: 2, label: t('description'), name: 'description' },
+		{ id: 3, label: t('slug'), name: 'slug' },
+		{ id: 4, label: t('brand'), name: 'brand' },
+		{ id: 5, label: t('price'), name: 'price' },
+		{ id: 6, label: t('discount'), name: 'discount' },
+		{ id: 7, label: t('priceWithDiscountForm'), name: 'offPrice' },
+		{ id: 8, label: t('stock'), name: 'countInStock' },
+		{ id: 9, label: t('productImageLink'), name: 'imageLink' },
+	]
+
 	return (
 		<div className="max-w-sm">
 			<form className="space-y-4" onSubmit={onSubmit}>
@@ -77,7 +44,7 @@ function ProductForm({
 				})}
 				<div>
 					<label htmlFor="category" className="mb-2 block">
-						دسته بندی
+						{t('category')}
 					</label>
 					<Select
 						id="category"
@@ -92,7 +59,7 @@ function ProductForm({
 					{isLoading ? (
 						<Loader />
 					) : (
-						<button className="btn-primary">تایید</button>
+						<button className="btn-primary">{t('submit')}</button>
 					)}
 				</div>
 			</form>

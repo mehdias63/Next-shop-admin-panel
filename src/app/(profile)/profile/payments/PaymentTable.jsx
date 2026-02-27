@@ -1,8 +1,11 @@
+'use client'
+
 import { userPaymentTHeads } from '@/constants/tableHeads'
 import { toLocalDateStringShort } from '@/utils/toLocalDate'
-import { toPersianNumbersWithComma } from '@/utils/toPersianNumbers'
+import { useLanguage } from '@/context/LanguageContext'
 
 function PaymentTable({ payments }) {
+	const { lang, t, formatNumber } = useLanguage()
 	return (
 		<div className="shadow-sm overflow-auto my-8">
 			<table className="border-collapse table-auto w-full min-w-[800px] text-sm">
@@ -14,7 +17,7 @@ function PaymentTable({ payments }) {
 									className="whitespace-nowrap table__th"
 									key={item.id}
 								>
-									{item.label}
+									{item.labelKey ? t(item.labelKey) : item.label}
 								</th>
 							)
 						})}
@@ -46,16 +49,16 @@ function PaymentTable({ payments }) {
 									</div>
 								</td>
 								<td className="table__td font-bold text-lg">
-									{toPersianNumbersWithComma(payment.amount)}
+									{formatNumber(payment.amount)}
 								</td>
 								<td className="table__td">
-									{toLocalDateStringShort(payment.createdAt)}
+									{toLocalDateStringShort(payment.createdAt, lang)}
 								</td>
 								<td className="table__td">
 									{payment.status === 'COMPLETED' ? (
-										<span className="badge badge--success">موفق</span>
+										<span className="badge badge--success">{t('success')}</span>
 									) : (
-										<span className="badge badge--error">ناموفق</span>
+										<span className="badge badge--error">{t('failed')}</span>
 									)}
 								</td>
 							</tr>

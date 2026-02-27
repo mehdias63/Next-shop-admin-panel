@@ -1,40 +1,56 @@
-import http from './httpService'
+import { userProfile, users, findUserById } from '@/data/users'
 
-export function getOtp(data) {
-	return http
-		.post('/user/get-otp', data)
-		.then(({ data }) => data.data)
-}
-export function checkOtp(data) {
-	return http
-		.post('/user/check-otp', data)
-		.then(({ data }) => data.data)
+const USER_KEY = 'next-shop-user-profile'
+
+function getStoredProfile() {
+	try {
+		return JSON.parse(localStorage.getItem(USER_KEY) || 'null')
+	} catch {
+		return null
+	}
 }
 
-export function completeProfile(data) {
-	return http
-		.post('/user/complete-profile', data)
-		.then(({ data }) => data.data)
+function saveProfile(updates) {
+	const current = getStoredProfile() || {}
+	localStorage.setItem(USER_KEY, JSON.stringify({ ...current, ...updates }))
+}
+
+export function getOtp() {
+	const code = Math.floor(100000 + Math.random() * 900000).toString()
+	return Promise.resolve({ message: 'کد OTP ارسال شد', code })
+}
+
+export function checkOtp() {
+	return Promise.resolve({ message: 'ورود موفق', user: { isActive: true } })
+}
+
+export function completeProfile({ name, email }) {
+	saveProfile({ name, nameEn: name, email })
+	return Promise.resolve({ message: 'پروفایل تکمیل شد' })
 }
 
 export function getUserProfile() {
-	return http.get('/user/profile').then(({ data }) => data.data)
+	const stored = getStoredProfile()
+	const user = stored ? { ...userProfile.user, ...stored } : userProfile.user
+	return Promise.resolve({ ...userProfile, user })
 }
 
-export function updateProfile(data) {
-	return http
-		.patch('/user/update', data)
-		.then(({ data }) => data.data)
+export function updateProfile(formData) {
+	saveProfile({ ...formData, nameEn: formData.name || '' })
+	return Promise.resolve({ message: 'پروفایل با موفقیت بروزرسانی شد' })
 }
 
 export function logout() {
-	return http.post('/user/logout')
+	try {
+		localStorage.removeItem(USER_KEY)
+	} catch {}
+	return Promise.resolve()
 }
 
 export function getAllUsers() {
-	return http.get('/admin/user/list').then(({ data }) => data.data)
+	return Promise.resolve({ users })
 }
 
 export function getUserById(id) {
-	return http.get(`/admin/user/list/${id}`).then(res => res.data.data)
+	return Promise.resolve(findUserById(id) || users[0])
 }

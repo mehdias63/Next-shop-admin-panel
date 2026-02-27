@@ -1,11 +1,14 @@
+'use client'
+
 import Loader from '@/ui/Loader'
 import { createPayment } from '@/services/paymentService'
-import { toPersianNumbersWithComma } from '@/utils/toPersianNumbers'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
+import { useLanguage } from '@/context/LanguageContext'
 
 function CartSummary({ payDetail }) {
 	const { totalOffAmount, totalPrice, totalGrossPrice } = payDetail
+	const { t, formatNumber } = useLanguage()
 	const { isLoading, mutateAsync } = useMutation({
 		mutationFn: createPayment,
 	})
@@ -25,18 +28,18 @@ function CartSummary({ payDetail }) {
 
 	return (
 		<div className="border border-gray-300 px-2 py-4 rounded-xl">
-			<p className="mb-4 font-bold">اطلاعات پرداخت</p>
+			<p className="mb-4 font-bold">{t('paymentInfo')}</p>
 			<div className="mb-4 flex items-center justify-between">
-				<span>جمع کل</span>
-				<span>{toPersianNumbersWithComma(totalGrossPrice)}</span>
+				<span>{t('totalAmount')}</span>
+				<span>{formatNumber(totalGrossPrice)}</span>
 			</div>
 			<div className="mb-4 flex items-center justify-between">
-				<span>تخفیف</span>
-				<span>{toPersianNumbersWithComma(totalOffAmount)} - </span>
+				<span>{t('totalDiscount')}</span>
+				<span>{formatNumber(totalOffAmount)} - </span>
 			</div>
 			<div className="mb-6 flex items-center justify-between font-bold">
-				<span>مبلغ قابل پرداخت</span>
-				<span>{toPersianNumbersWithComma(totalPrice)}</span>
+				<span>{t('payableAmount')}</span>
+				<span>{formatNumber(totalPrice)}</span>
 			</div>
 			<div>
 				{isLoading ? (
@@ -46,7 +49,7 @@ function CartSummary({ payDetail }) {
 						className="btn-primary"
 						onClick={createPaymentHandler}
 					>
-						ثبت سفارش
+						{t('placeOrder')}
 					</button>
 				)}
 			</div>

@@ -7,25 +7,19 @@ import {
 	useSearchParams,
 } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
-
-const sortOptions = [
-	{
-		id: 1,
-		value: 'latest',
-		label: 'جدید ترین',
-	},
-	{
-		id: 2,
-		value: 'earliest',
-		label: 'قدیمی ترین',
-	},
-]
+import { useLanguage } from '@/context/LanguageContext'
 
 function ProductsSort() {
+	const { t } = useLanguage()
 	const router = useRouter()
 	const pathname = usePathname()
 	const searchParams = useSearchParams()
 	const [sort, setSort] = useState('')
+
+	const sortOptions = [
+		{ id: 1, value: 'latest', labelKey: 'newest' },
+		{ id: 2, value: 'earliest', labelKey: 'oldest' },
+	]
 
 	const createQueryString = useCallback(
 		(name, value) => {
@@ -49,14 +43,14 @@ function ProductsSort() {
 	return (
 		<div className="mb-8 bg-white rounded-2xl shadow-md p-5 border border-gray-200">
 			<p className="font-bold text-lg text-gray-800 mb-4 border-b pb-2">
-				🔽 مرتب‌سازی بر اساس
+				{t('sortBy')}
 			</p>
 			<div className="space-y-3">
 				{sortOptions.map(item => (
 					<RadioInput
 						id={item.id}
 						key={item.id}
-						label={item.label}
+						label={t(item.labelKey)}
 						name="product-sort"
 						value={item.value}
 						checked={sort === item.value}

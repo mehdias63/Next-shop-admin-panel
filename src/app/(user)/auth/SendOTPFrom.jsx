@@ -1,7 +1,12 @@
+'use client'
+
 import Loader from '../../ui/Loader'
 import TextField from '../../ui/TextField'
+import { useLanguage } from '@/context/LanguageContext'
 
 function SendOTPFrom({ phoneNumber, onChange, onSubmit, isLoading }) {
+	const { t } = useLanguage()
+
 	return (
 		<div className="flex items-center justify-center">
 			<form
@@ -9,7 +14,7 @@ function SendOTPFrom({ phoneNumber, onChange, onSubmit, isLoading }) {
 				onSubmit={onSubmit}
 			>
 				<TextField
-					label="شماره موبایل"
+					label={t('mobileNumber')}
 					name="phoneNumber"
 					value={phoneNumber}
 					onChange={onChange}
@@ -19,7 +24,7 @@ function SendOTPFrom({ phoneNumber, onChange, onSubmit, isLoading }) {
 						<Loader />
 					) : (
 						<button type="submit" className="btn-primary">
-							ارسال کد تایید
+							{t('sendVerificationCode')}
 						</button>
 					)}
 				</div>

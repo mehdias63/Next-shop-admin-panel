@@ -13,15 +13,17 @@ import {
 	HiOutlineChartSquareBar,
 } from 'react-icons/hi'
 import { toLocalDateStringShort } from '@/utils/toLocalDate'
+import { useLanguage } from '@/context/LanguageContext'
 
 function CouponDetailsPage() {
 	const { id } = useParams()
 	const { data, isLoading } = useGetOneCoupon(id)
+	const { lang, t } = useLanguage()
 
 	if (isLoading) return <Loader />
 	if (!data?.coupon)
 		return (
-			<p className="text-center text-red-500 mt-10">کوپن پیدا نشد.</p>
+			<p className="text-center text-red-500 mt-10">{t('couponNotFound')}</p>
 		)
 
 	const coupon = data.coupon
@@ -31,54 +33,54 @@ function CouponDetailsPage() {
 			<div className="mb-10 bg-gradient-to-tr from-green-100 to-white rounded-xl p-6 shadow-sm flex items-center justify-between">
 				<div>
 					<h1 className="text-3xl font-extrabold text-green-800 mb-2">
-						جزئیات کد تخفیف
+						{t('couponDetails')}
 					</h1>
 					<p className="text-gray-600">
-						اطلاعات کد تخفیف انتخاب‌ شده را مشاهده می‌کنید.
+						{t('couponDetailsSubtitle')}
 					</p>
 				</div>
 				<Link
 					href="/admin/coupons"
 					className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
 				>
-					بازگشت
+					{t('back')}
 				</Link>
 			</div>
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 				<InfoCard
 					icon={<HiOutlineTag />}
-					label="کد تخفیف"
+					label={t('discountCodeLabel')}
 					value={coupon.code}
 					color="green"
 				/>
 				<InfoCard
 					icon={<HiOutlineCash />}
-					label="نوع تخفیف"
+					label={t('discountType')}
 					value={coupon.type}
 					color="blue"
 				/>
 				<InfoCard
 					icon={<HiOutlineHashtag />}
-					label="مقدار تخفیف"
+					label={t('discountAmount')}
 					value={coupon.amount}
 					color="indigo"
 				/>
 				<InfoCard
 					icon={<HiOutlineClock />}
-					label="تاریخ انقضا"
-					value={toLocalDateStringShort(coupon.expireDate)}
+					label={t('expiryDate')}
+					value={toLocalDateStringShort(coupon.expireDate, lang)}
 					color="rose"
 				/>
 				<InfoCard
 					icon={<HiOutlineChartSquareBar />}
-					label="میزان مصرف"
+					label={t('usageAmount')}
 					value={`${coupon.usageCount} / ${coupon.usageLimit}`}
 					color="amber"
 				/>
 				<div className="bg-white border-l-4 border-l-purple-500 shadow-sm p-5 rounded-xl col-span-full">
 					<div className="flex items-center gap-3 mb-2 text-purple-600 font-bold">
 						<HiOutlineCube className="text-xl" />
-						<span>محصولات مرتبط</span>
+						<span>{t('relatedProducts')}</span>
 					</div>
 					<div className="flex flex-wrap gap-2 mt-2">
 						{coupon.productIds?.length ? (
@@ -92,7 +94,7 @@ function CouponDetailsPage() {
 							))
 						) : (
 							<span className="text-sm text-gray-500">
-								محصولی انتخاب نشده است.
+								{t('noProductsSelected')}
 							</span>
 						)}
 					</div>

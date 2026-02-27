@@ -12,6 +12,7 @@ import { includeObj } from '@/utils/objectUtils'
 import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { useLanguage } from '@/context/LanguageContext'
 const includesCategoryKey = ['title', 'englishTitle', 'description']
 
 function page() {
@@ -23,6 +24,7 @@ function page() {
 	const [selectedType, setSelectedType] = useState('')
 	const { isLoading, mutateAsync } = useUpdateCategory()
 	const router = useRouter()
+	const { t } = useLanguage()
 
 	useEffect(() => {
 		if (category) {
@@ -58,7 +60,7 @@ function page() {
 	return (
 		<div>
 			<h1 className="mb-6 font-bold text-xl">
-				ویرایش دسته بندی جدید
+				{t('editCategory')}
 			</h1>
 			<CategoryForm
 				category={formData}

@@ -13,16 +13,18 @@ import {
 	HiOutlinePhotograph,
 } from 'react-icons/hi'
 import Link from 'next/link'
+import { useLanguage } from '@/context/LanguageContext'
 
 function ProductDetailsPage() {
 	const { id } = useParams()
 	const { data, isLoading } = useGetProductById(id)
+	const { t } = useLanguage()
 
 	if (isLoading) return <Loader />
 	if (!data?.product)
 		return (
 			<p className="text-center text-red-500 mt-10">
-				محصول یافت نشد.
+				{t('productNotFound')}
 			</p>
 		)
 
@@ -33,21 +35,21 @@ function ProductDetailsPage() {
 			<div className="mb-10 bg-gradient-to-tr from-blue-100 to-white rounded-xl p-6 shadow-sm flex items-center justify-between">
 				<div>
 					<h1 className="text-3xl font-extrabold text-blue-800 mb-2">
-						جزئیات محصول
+						{t('productDetails')}
 					</h1>
 					<p className="text-gray-600">
-						مشخصات کامل محصول را در این صفحه مشاهده می‌کنید.
+						{t('productDetailsSubtitle')}
 					</p>
 				</div>
 				<Link href="/admin/products" className="link-btn">
-					بازگشت
+					{t('back')}
 				</Link>
 			</div>
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 				<div className="col-span-1">
 					<div className="bg-white shadow-md rounded-xl p-4 border">
 						<h2 className="text-lg font-bold mb-4 text-gray-700 border-b pb-2">
-							تصویر محصول
+							{t('productImage')}
 						</h2>
 						<div className="flex justify-center items-center h-64">
 							{product.image ? (
@@ -61,7 +63,7 @@ function ProductDetailsPage() {
 							) : (
 								<div className="text-gray-400 text-center">
 									<HiOutlinePhotograph className="w-12 h-12 mx-auto mb-2" />
-									<p>بدون تصویر</p>
+									<p>{t('noImage')}</p>
 								</div>
 							)}
 						</div>
@@ -70,43 +72,43 @@ function ProductDetailsPage() {
 				<div className="col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
 					<InfoCard
 						icon={<HiOutlineTag />}
-						label="نام محصول"
+						label={t('productName')}
 						value={product.title}
 						color="blue"
 					/>
 					<InfoCard
 						icon={<HiOutlineClipboardCheck />}
-						label="دسته‌بندی"
+						label={t('category')}
 						value={product.category?.title}
 						color="indigo"
 					/>
 					<InfoCard
 						icon={<HiOutlineCurrencyDollar />}
-						label="قیمت اصلی"
-						value={product.price.toLocaleString() + ' تومان'}
+						label={t('mainPrice')}
+						value={(product.price ?? 0).toLocaleString() + ' ' + t('currency')}
 						color="emerald"
 					/>
 					<InfoCard
 						icon={<HiOutlineCurrencyDollar />}
-						label=" تخفیف"
-						value={product.discount.toLocaleString() + ' تومان'}
+						label={t('discount')}
+						value={(product.discount ?? 0).toLocaleString() + ' ' + t('currency')}
 						color="rose"
 					/>
 					<InfoCard
 						icon={<HiOutlineCurrencyDollar />}
-						label="قیمت نهایی"
-						value={product.offPrice.toLocaleString() + ' تومان'}
+						label={t('finalPrice')}
+						value={(product.offPrice ?? 0).toLocaleString() + ' ' + t('currency')}
 						color="amber"
 					/>
 					<InfoCard
 						icon={<HiOutlineArchive />}
-						label="موجودی انبار"
+						label={t('stockAmount')}
 						value={product.countInStock}
 						color="purple"
 					/>
 					<InfoCard
 						icon={<HiOutlineDocumentText />}
-						label="توضیحات"
+						label={t('description')}
 						value={product.description || '—'}
 						color="gray"
 						full

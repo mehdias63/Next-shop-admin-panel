@@ -7,8 +7,10 @@ import { useQueryClient } from '@tanstack/react-query'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-hot-toast'
+import { useLanguage } from '@/context/LanguageContext'
 
 function AddToCart({ product }) {
+	const { t } = useLanguage()
 	const queryClient = useQueryClient()
 	const router = useRouter()
 	const { data } = useGetUser()
@@ -17,7 +19,7 @@ function AddToCart({ product }) {
 
 	const addToCartHandler = async () => {
 		if (!user) {
-			toast.error('لطفا ابتدا لاگین کنید.')
+			toast.error(t('pleaseLoginFirst'))
 			router.push('/auth')
 			return
 		}
@@ -42,7 +44,7 @@ function AddToCart({ product }) {
 		<div>
 			{isInCart(user, product) ? (
 				<Link href="/cart" className="text-blue-500 font-bold">
-					ادامه سفارش
+					{t('continueOrder')}
 				</Link>
 			) : isLoading ? (
 				<Loader />
@@ -51,7 +53,7 @@ function AddToCart({ product }) {
 					onClick={addToCartHandler}
 					className="btn-primary max-w-md py-2"
 				>
-					اضافه کردن به سبد خرید
+					{t('addToCart')}
 				</button>
 			)}
 		</div>

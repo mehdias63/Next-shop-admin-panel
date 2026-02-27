@@ -1,3 +1,5 @@
+'use client'
+
 import { productListTableTHeads } from '@/constants/tableHeads'
 import Link from 'next/link'
 import { RiEdit2Line } from 'react-icons/ri'
@@ -6,10 +8,12 @@ import { useRemoveProduct } from '@/hooks/useProducts'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { useQueryClient } from '@tanstack/react-query'
+import { useLanguage } from '@/context/LanguageContext'
 
 function ProductListTable({ products }) {
 	const { mutateAsync } = useRemoveProduct()
 	const queryClient = useQueryClient()
+	const { t } = useLanguage()
 
 	const removeProductHandler = async id => {
 		try {
@@ -31,7 +35,7 @@ function ProductListTable({ products }) {
 									className="whitespace-nowrap table__th"
 									key={item.id}
 								>
-									{item.label}
+									{item.labelKey ? t(item.labelKey) : item.label}
 								</th>
 							)
 						})}

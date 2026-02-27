@@ -2,8 +2,11 @@
 
 import { logout } from '@/services/authServices'
 import Link from 'next/link'
+import { useLanguage } from '@/context/LanguageContext'
 
 function AdminSideBar() {
+	const { t } = useLanguage()
+
 	const logoutHandler = async () => {
 		await logout()
 		document.location.href = '/'
@@ -14,37 +17,37 @@ function AdminSideBar() {
 			<ul className="flex flex-col space-y-8">
 				<li>
 					<Link href="/" className="link-li">
-						صفحه اصلی
+						{t('home')}
 					</Link>
 				</li>
 				<li>
 					<Link href="/admin" className="link-li">
-						داشبورد
+						{t('dashboard')}
 					</Link>
 				</li>
 				<li>
 					<Link href="/admin/users" className="link-li">
-						کاربران
+						{t('users')}
 					</Link>
 				</li>
 				<li>
 					<Link href="/admin/products" className="link-li">
-						محصولات
+						{t('products')}
 					</Link>
 				</li>
 				<li>
 					<Link href="/admin/categories" className="link-li">
-						دسته بندی
+						{t('categories')}
 					</Link>
 				</li>
 				<li>
 					<Link href="/admin/payments" className="link-li">
-						سفارشات{' '}
+						{t('orders')}
 					</Link>
 				</li>
 				<li>
 					<Link href="/admin/coupons" className="link-li">
-						کد تخفیف
+						{t('discountCodes')}
 					</Link>
 				</li>
 				<li>
@@ -52,7 +55,7 @@ function AdminSideBar() {
 						onClick={logoutHandler}
 						className="link-li cursor-pointer"
 					>
-						خروج از حساب کاربری
+						{t('logout')}
 					</button>
 				</li>
 			</ul>

@@ -8,8 +8,10 @@ import { includeObj } from '@/utils/objectUtils'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { useLanguage } from '@/context/LanguageContext'
 
 function MePage() {
+	const { t } = useLanguage()
 	const { data, isLoading } = useGetUser()
 	const queryClient = useQueryClient()
 	const { isLoading: isUpdating, mutateAsync } = useMutation({
@@ -40,7 +42,7 @@ function MePage() {
 
 	return (
 		<div className="max-w-sm">
-			<h1 className="text-xl font-bold mb-4">اطلاعات کاربری</h1>
+			<h1 className="text-xl font-bold mb-4">{t('userInfoTitle')}</h1>
 			<form onSubmit={submitHandler} className="space-y-5">
 				{Object.keys(includeObj(user, includesKey)).map(key => {
 					return (
@@ -63,7 +65,7 @@ function MePage() {
 						<Loader />
 					) : (
 						<button type="submit" className="btn-primary">
-							تایید
+							{t('submit')}
 						</button>
 					)}
 				</div>

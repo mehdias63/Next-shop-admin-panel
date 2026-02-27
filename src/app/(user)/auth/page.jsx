@@ -1,12 +1,12 @@
 'use client'
 import { useEffect, useState } from 'react'
 import SendOTPFrom from './SendOTPFrom'
-import http from '@/services/httpService'
 import { toast } from 'react-hot-toast'
 import { useMutation } from '@tanstack/react-query'
-import { getOtp, checkOtp } from '@/services/authServices'
+import { getOtp } from '@/services/authServices'
 import CheckOTPForm from './CheckOTPForm'
 import { useRouter } from 'next/navigation'
+import { useLanguage } from '@/context/LanguageContext'
 
 const RESEND_TIME = 90
 
@@ -15,31 +15,23 @@ function Authpage() {
 	const [step, setStep] = useState(1)
 	const [time, setTime] = useState(RESEND_TIME)
 	const [otp, setOtp] = useState('')
+	const [generatedCode, setGeneratedCode] = useState('')
 	const router = useRouter()
+	const { t } = useLanguage()
 
-	const {
-		data: otpResponse,
-		error,
-		isLoading,
-		mutateAsync: mutateGetOtp,
-	} = useMutation({
+	const { isLoading, mutateAsync: mutateGetOtp } = useMutation({
 		mutationFn: getOtp,
 	})
-
-	const { mutateAsync: mutateCheckOtp, isLoading: isCheckingOtp } =
-		useMutation({
-			mutationFn: checkOtp,
-		})
 
 	const phoneNumberHandler = e => {
 		setPhoneNumber(e.target.value)
 	}
+
 	const sendOtpHandler = async e => {
 		e.preventDefault()
 		try {
 			const data = await mutateGetOtp({ phoneNumber })
-			console.log(data)
-			toast.success(data.message)
+			setGeneratedCode(data.code)
 			setStep(2)
 			setTime(RESEND_TIME)
 			setOtp('')
@@ -47,21 +39,14 @@ function Authpage() {
 			toast.error(error?.response?.data?.message)
 		}
 	}
-	const checkOtpHandler = async e => {
+
+	const checkOtpHandler = e => {
 		e.preventDefault()
-		try {
-			const { message, user } = await mutateCheckOtp({
-				phoneNumber,
-				otp,
-			})
-			toast.success(message)
-			if (user.isActive) {
-				router.push('/')
-			} else {
-				router.push('/complete-profile')
-			}
-		} catch (error) {
-			toast.error(error?.response?.data?.message)
+		if (otp === generatedCode) {
+			toast.success(t('loginSuccess'))
+			router.push('/complete-profile')
+		} else {
+			toast.error(t('invalidCode'))
 		}
 	}
 
@@ -93,14 +78,14 @@ function Authpage() {
 						onSubmit={checkOtpHandler}
 						time={time}
 						onResendOtp={sendOtpHandler}
-						otpResponse={otpResponse}
-						isCheckingOtp={isCheckingOtp}
+						generatedCode={generatedCode}
 					/>
 				)
 			default:
 				return null
 		}
 	}
+
 	return (
 		<div className="flex justify-center">
 			<div className="w-full sm:max-w-sm">{renderSteps()}</div>

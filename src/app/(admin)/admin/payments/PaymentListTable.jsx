@@ -1,10 +1,14 @@
+'use client'
+
 import { adminPaymentListTableTHeads } from '@/constants/tableHeads'
 import { toLocalDateStringShort } from '@/utils/toLocalDate'
 import { toPersianNumbersWithComma } from '@/utils/toPersianNumbers'
 import Link from 'next/link'
 import { HiEye } from 'react-icons/hi'
+import { useLanguage } from '@/context/LanguageContext'
 
 function PaymentListTable({ payments }) {
+	const { lang, t, formatNumber } = useLanguage()
 	return (
 		<div className="overflow-x-auto my-8">
 			<div className="bg-white shadow-md rounded-xl overflow-hidden border border-gray-100">
@@ -16,7 +20,7 @@ function PaymentListTable({ payments }) {
 									key={item.id}
 									className="text-right px-4 py-3 whitespace-nowrap border-b"
 								>
-									{item.label}
+									{item.labelKey ? t(item.labelKey) : item.label}
 								</th>
 							))}
 						</tr>
@@ -60,10 +64,10 @@ function PaymentListTable({ payments }) {
 									</div>
 								</td>
 								<td className="px-4 py-3 border-b font-bold text-gray-800">
-									{toPersianNumbersWithComma(payment.amount)}
+									{formatNumber(payment.amount)}
 								</td>
 								<td className="px-4 py-3 border-b text-gray-600">
-									{toLocalDateStringShort(payment.createdAt)}
+									{toLocalDateStringShort(payment.createdAt, lang)}
 								</td>
 								<td className="px-4 py-3 border-b">
 									<span
@@ -74,8 +78,8 @@ function PaymentListTable({ payments }) {
 										}`}
 									>
 										{payment.status === 'COMPLETED'
-											? 'موفق'
-											: 'ناموفق'}
+											? t('success')
+											: t('failed')}
 									</span>
 								</td>
 							</tr>

@@ -8,7 +8,10 @@
 			"@/pages/*": ["./src/app/*"],
 			"@/services/*": ["./src/services/*"],
 			"@/hooks/*": ["./src/hooks/*"],
-			"@/public/*": ["./public/*"]
+			"@/public/*": ["./public/*"],
+			"@/locales/*": ["./src/locales/*"],
+			"@/context/*": ["./src/context/*"],
+		"@/data/*": ["./src/data/*"]
 		}
 	}
 }

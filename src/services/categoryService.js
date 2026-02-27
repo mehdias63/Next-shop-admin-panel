@@ -1,27 +1,44 @@
-import http from './httpService'
+import {
+	categories,
+	findCategoryById,
+	addCategoryItem,
+	removeCategoryItem,
+	updateCategoryItem,
+} from '@/data/categories'
 
 export function getCategories() {
-	return http.get('/category/list').then(({ data }) => data.data)
+	return Promise.resolve({ categories: [...categories] })
 }
 
 export function getCategoryById(id) {
-	return http.get(`/category/${id}`).then(({ data }) => data.data)
+	const category = findCategoryById(id) || categories[0]
+	return Promise.resolve({ category })
 }
 
-export function addNewCategory(data) {
-	return http
-		.post('/admin/category/add', data)
-		.then(({ data }) => data.data)
+export function addNewCategory(formData) {
+	const newCategory = {
+		_id: `cat-${Date.now()}`,
+		title: formData.title || '',
+		englishTitle: formData.englishTitle || formData.title || '',
+		titleEn: formData.englishTitle || formData.title || '',
+		description: formData.description || '',
+		descriptionEn: formData.description || '',
+		type: formData.type || 'product',
+	}
+	addCategoryItem(newCategory)
+	return Promise.resolve({ message: 'دسته‌بندی با موفقیت اضافه شد' })
 }
 
-export function updateCategory({ id, data }) {
-	return http
-		.patch(`/admin/category/update/${id}`, data)
-		.then(({ data }) => data.data)
+export function updateCategory({ data, id }) {
+	const updates = {
+		...data,
+		titleEn: data.englishTitle || data.title || '',
+	}
+	updateCategoryItem(id, updates)
+	return Promise.resolve({ message: 'دسته‌بندی با موفقیت ویرایش شد' })
 }
 
 export function removeCategory(id) {
-	return http
-		.delete(`/admin/category/remove/${id}`)
-		.then(({ data }) => data.data)
+	removeCategoryItem(id)
+	return Promise.resolve({ message: 'دسته‌بندی با موفقیت حذف شد' })
 }

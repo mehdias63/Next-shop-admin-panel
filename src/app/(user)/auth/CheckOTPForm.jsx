@@ -1,7 +1,9 @@
+'use client'
+
 import OTPInput from 'react-otp-input'
 import { HiArrowNarrowRight } from 'react-icons/hi'
 import { CiEdit } from 'react-icons/ci'
-import Loader from '../../ui/Loader'
+import { useLanguage } from '@/context/LanguageContext'
 
 function CheckOTPForm({
 	onSubmit,
@@ -10,31 +12,37 @@ function CheckOTPForm({
 	onBack,
 	time,
 	onResendOtp,
-	otpResponse,
-	isCheckingOtp,
+	generatedCode,
 }) {
+	const { t } = useLanguage()
+
 	return (
 		<div>
 			<button onClick={onBack} className="mb-4">
 				<HiArrowNarrowRight className="w-6 h-6" />
 			</button>
-			{otpResponse && (
-				<p>
-					{otpResponse?.message}
-					<button onClick={onBack} className="mr-2">
-						<CiEdit className="w-6 h-6 text-gray-700" />
-					</button>
-				</p>
+			<button onClick={onBack} className="mb-4 mr-2">
+				<CiEdit className="w-6 h-6 text-gray-700" />
+			</button>
+
+			{generatedCode && (
+				<div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-xl text-center">
+					<p className="text-sm text-gray-500 mb-1">{t('yourVerificationCode')}</p>
+					<p className="text-3xl font-bold tracking-widest text-blue-700">
+						{generatedCode}
+					</p>
+				</div>
 			)}
+
 			<div className="mb-4 text-secondary-500">
 				{time > 0 ? (
-					<p>{time} ثانیه تا ارسال مجدد کد</p>
+					<p>{t('secondsUntilResend', time)}</p>
 				) : (
-					<button onClick={onResendOtp}>ارسال مجدد کد؟</button>
+					<button onClick={onResendOtp}>{t('resendCode')}</button>
 				)}
 			</div>
 			<form className="space-y-10" onSubmit={onSubmit}>
-				<p className="font-bold">کد تایید را وارد کنید</p>
+				<p className="font-bold">{t('enterVerificationCode')}</p>
 				<OTPInput
 					value={otp}
 					onChange={setOtp}
@@ -50,13 +58,9 @@ function CheckOTPForm({
 					renderInput={props => <input type="number" {...props} />}
 				/>
 				<div>
-					{isCheckingOtp ? (
-						<Loader />
-					) : (
-						<button type="submit" className="btn-primary">
-							تایید
-						</button>
-					)}
+					<button type="submit" className="btn-primary">
+						{t('submit')}
+					</button>
 				</div>
 			</form>
 		</div>

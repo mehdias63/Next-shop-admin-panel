@@ -1,16 +1,17 @@
 'use client'
 
 import { useGetUser } from '@/hooks/useAuth'
-import { toLocalDateString } from '@/utils/toLocalDate'
 import PaymentTable from './payments/PaymentTable'
 import Link from 'next/link'
 import Loader from '@/ui/Loader'
 import { HiPlusCircle } from 'react-icons/hi'
 import Image from 'next/image'
+import { useLanguage } from '@/context/LanguageContext'
 
 function Profile() {
 	const { data, isLoading } = useGetUser()
 	const { user, payments } = data || {}
+	const { t } = useLanguage()
 
 	if (isLoading) return <Loader />
 
@@ -19,10 +20,10 @@ function Profile() {
 			<div className="bg-white shadow-lg rounded-2xl overflow-hidden border border-gray-200  max-w-3xl mx-auto">
 				<div className="p-6 text-center">
 					<h2 className="text-2xl font-extrabold mb-2 text-gray-800">
-						داشبورد کاربری {user.name}
+						{t('userDashboardTitle', user.name)}
 					</h2>
 					<p className="text-gray-600 mb-6">
-						اطلاعات، سفارشات و فعالیت‌های خود را در اینجا مشاهده کنید.
+						{t('profileDesc')}
 					</p>
 					<div className="flex justify-center">
 						<Image
@@ -38,11 +39,11 @@ function Profile() {
 			<div className="border border-gray-200 rounded-xl mt-8 shadow-sm bg-white">
 				<div className="p-4 flex items-center justify-between">
 					<h2 className="font-bold text-lg text-gray-700">
-						آخرین سفارشات کاربر
+						{t('lastOrders')}
 					</h2>
 					<Link className="link-btn text-sm" href="/profile/payments">
 						<HiPlusCircle className="w-5 h-5 ml-1" />
-						<span>مشاهده همه سفارشات</span>
+						<span>{t('viewAllOrders')}</span>
 					</Link>
 				</div>
 

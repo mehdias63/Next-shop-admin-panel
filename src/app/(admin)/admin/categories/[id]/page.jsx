@@ -10,16 +10,18 @@ import {
 	HiOutlineArchive,
 	HiOutlineCollection,
 } from 'react-icons/hi'
+import { useLanguage } from '@/context/LanguageContext'
 
 function CategoryDetailsPage() {
 	const { id } = useParams()
 	const { data, isLoading } = useGetCategoryById(id)
+	const { t } = useLanguage()
 
 	if (isLoading) return <Loader />
 	if (!data?.category)
 		return (
 			<p className="text-center text-red-500 mt-10">
-				دسته‌بندی پیدا نشد.
+				{t('categoryNotFound')}
 			</p>
 		)
 
@@ -30,41 +32,41 @@ function CategoryDetailsPage() {
 			<div className="mb-10 bg-gradient-to-tr from-purple-100 to-white rounded-xl p-6 shadow-sm flex items-center justify-between">
 				<div>
 					<h1 className="text-3xl font-extrabold text-purple-800 mb-2">
-						جزئیات دسته‌بندی
+						{t('categoryDetails')}
 					</h1>
 					<p className="text-gray-600">
-						اطلاعات دسته‌بندی انتخاب‌شده را مشاهده می‌کنید.
+						{t('categoryDetailsSubtitle')}
 					</p>
 				</div>
 				<Link
 					href="/admin/categories"
 					className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition"
 				>
-					بازگشت
+					{t('back')}
 				</Link>
 			</div>
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 				<InfoCard
 					icon={<HiOutlineTag />}
-					label="عنوان فارسی"
+					label={t('persianTitle')}
 					value={category.title}
 					color="rose"
 				/>
 				<InfoCard
 					icon={<HiOutlineArchive />}
-					label="عنوان انگلیسی"
+					label={t('englishTitle')}
 					value={category.englishTitle}
 					color="indigo"
 				/>
 				<InfoCard
 					icon={<HiOutlineCollection />}
-					label="نوع دسته‌بندی"
+					label={t('categoryType')}
 					value={category.type}
 					color="emerald"
 				/>
 				<InfoCard
 					icon={<HiOutlineDocumentText />}
-					label="توضیحات"
+					label={t('description')}
 					value={category.description || '—'}
 					color="gray"
 					full

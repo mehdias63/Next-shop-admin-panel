@@ -1,8 +1,12 @@
+'use client'
+
 import { userListTableHeads } from '@/constants/tableHeads'
 import { toLocalDateStringShort } from '@/utils/toLocalDate'
 import { HiCheckCircle } from 'react-icons/hi'
+import { useLanguage } from '@/context/LanguageContext'
 
 function UsersTable({ users }) {
+	const { lang, t } = useLanguage()
 	return (
 		<div className="shadow-sm overflow-auto my-8">
 			<table className="border-collapse table-auto w-full min-w-[800px] text-sm">
@@ -14,7 +18,7 @@ function UsersTable({ users }) {
 									className="whitespace-nowrap table__th"
 									key={item.id}
 								>
-									{item.label}
+									{item.labelKey ? t(item.labelKey) : item.label}
 								</th>
 							)
 						})}
@@ -52,7 +56,7 @@ function UsersTable({ users }) {
 									</div>
 								</td>
 								<td className="table__td">
-									{toLocalDateStringShort(user.createdAt)}
+									{toLocalDateStringShort(user.createdAt, lang)}
 								</td>
 							</tr>
 						)

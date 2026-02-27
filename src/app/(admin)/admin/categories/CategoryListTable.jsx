@@ -1,3 +1,5 @@
+'use client'
+
 import { categoryListTableTHeads } from '@/constants/tableHeads'
 import { useRemoveCategory } from '@/hooks/useCategories'
 import { useQueryClient } from '@tanstack/react-query'
@@ -5,10 +7,12 @@ import Link from 'next/link'
 import { toast } from 'react-hot-toast'
 import { HiEye, HiTrash } from 'react-icons/hi'
 import { RiEdit2Line } from 'react-icons/ri'
+import { useLanguage } from '@/context/LanguageContext'
 
 function CategoryListTable({ categories }) {
 	const { mutateAsync } = useRemoveCategory()
 	const queryClient = useQueryClient()
+	const { t } = useLanguage()
 
 	const removeCategoryHandler = async id => {
 		try {
@@ -31,7 +35,7 @@ function CategoryListTable({ categories }) {
 									className="whitespace-nowrap table__th"
 									key={item.id}
 								>
-									{item.label}
+									{item.labelKey ? t(item.labelKey) : item.label}
 								</th>
 							)
 						})}
